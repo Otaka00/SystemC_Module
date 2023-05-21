@@ -3043,7 +3043,6 @@ E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\incl
           [
               T=c10::SymInt
           ]
-  top.cpp
-  Generating Code...
-     Creating library E:\courses\Graduation Project\Final_SystemC\x64\Debug\Final_SystemC.lib and object E:\courses\Graduation Project\Final_SystemC\x64\Debug\Final_SystemC.exp
-  Final_SystemC.vcxproj -> E:\courses\Graduation Project\Final_SystemC\x64\Debug\Final_SystemC.exe
+E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include\torch\nn\modules\padding.h(132,1): fatal  error C1060: compiler is out of heap space
+E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include\torch\nn\modules\padding.h(132,1): message : This diagnostic occurred in the compiler generated function 'torch::nn::ReplicationPadImpl<1,torch::nn::ReplicationPad1dImpl>::ReplicationPadImpl(const torch::nn::ReplicationPadImpl<1,torch::nn::ReplicationPad1dImpl> &)'
+E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include\torch\nn\modules\padding.h(152,1): message : see reference to function 'torch::nn::ReplicationPadImpl<1,torch::nn::ReplicationPad1dImpl>::ReplicationPadImpl(const torch::nn::ReplicationPadImpl<1,torch::nn::ReplicationPad1dImpl> &)'
