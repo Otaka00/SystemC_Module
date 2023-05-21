@@ -3043,4 +3043,7 @@ E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\incl
           [
               T=c10::SymInt
           ]
+  top.cpp
+  Generating Code...
+     Creating library E:\courses\Graduation Project\Final_SystemC\x64\Debug\Final_SystemC.lib and object E:\courses\Graduation Project\Final_SystemC\x64\Debug\Final_SystemC.exp
   Final_SystemC.vcxproj -> E:\courses\Graduation Project\Final_SystemC\x64\Debug\Final_SystemC.exe
