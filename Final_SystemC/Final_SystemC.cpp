@@ -12,6 +12,7 @@
 #include "tlm.h"
 #include "tlm_utils/simple_initiator_socket.h"
 #include "tlm_utils/simple_target_socket.h"
+#include <opencv2/opencv.hpp>
 
 using namespace sc_core;
 using namespace tlm;
@@ -28,10 +29,28 @@ SC_MODULE(Initiator) {
         unsigned int addr = static_cast<unsigned int>(rand() % 0x100);
         cout << "address: " << addr << "\n";
 
-        std::vector<float> input_data = { 1.0,2.0,3.0,4.0 }; // example input data
+
+        cv::Mat image = cv::imread("E:\\courses\\lena.png", cv::IMREAD_COLOR);
+        std::vector<int> input_data(image.rows * image.cols); // example input data
+
+        if (image.empty()){
+            cerr << "Failed to open image" << endl;
+                return;
+        }
+
+        int count = 0;
+        for (int i = 0; i < image.rows; i++)
+        {
+            for (int j = 0; j < image.cols; j++)
+            {
+                input_data[count] = image.at<uchar>(i, j);
+                //input_data[count] = image.at<float>(i, j);
+                count++;
+            }
+        }
 
         int input_size = input_data.size() * sizeof(float);
-        cout << input_data << input_size;
+        cout << "Input Data: "<< input_data << "\nInput Size: "<< input_size;
         // Create a payload for the transaction
         tlm_generic_payload payload;
         payload.set_data_ptr(reinterpret_cast<unsigned char*>(input_data.data()));
@@ -72,13 +91,13 @@ SC_MODULE(Target) {
         // Extract the input data from the payload
         float* input_data = reinterpret_cast<float*>(payload.get_data_ptr());
         int input_size = payload.get_data_length() / sizeof(float);
-
-        cout << "Input received in Target module: ";
+     
+      /*cout << "Input received in Target module: ";
         for (int i = 0; i < input_size; ++i) {
             cout << input_data[i] << " ";
         }
         cout << endl;
-
+        */
         torch::jit::Module module;
         try {
             // Deserialize the ScriptModule from a file using torch::jit::load().
@@ -92,7 +111,7 @@ SC_MODULE(Target) {
         }
         // Create a vector of inputs.
         std::vector<torch::jit::IValue> inputs;
-        inputs.push_back(torch::rand({ 1,1, 28, 28 }));;
+        inputs.push_back(torch::rand({ 1,1, 512, 512 }));;
         std::cout << "Inputs: " << inputs << "\n";
         // Execute the model and turn its output into a tensor.
         at::Tensor output = module.forward(inputs).toTensor();

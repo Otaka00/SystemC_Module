@@ -71,19 +71,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>E:\courses\Graduation Project\systemc-master\systemc-master\src;$(IncludePath)</IncludePath>
+    <IncludePath>E:\courses\Graduation Project\OpenCV\sources\include;E:\courses\Graduation Project\systemc-master\systemc-master\src;$(IncludePath)</IncludePath>
     <LibraryPath>E:\courses\Graduation Project\systemc-master\systemc-master\msvc10\SystemC\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>E:\courses\Graduation Project\systemc-master\systemc-master\src;$(IncludePath)</IncludePath>
+    <IncludePath>E:\courses\Graduation Project\OpenCV\sources\include;E:\courses\Graduation Project\systemc-master\systemc-master\src;$(IncludePath)</IncludePath>
     <LibraryPath>E:\courses\Graduation Project\systemc-master\systemc-master\msvc10\SystemC\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>E:\courses\Graduation Project\systemc-master\systemc-master\src;$(IncludePath)</IncludePath>
+    <IncludePath>E:\courses\Graduation Project\OpenCV\sources\include;E:\courses\Graduation Project\systemc-master\systemc-master\src;$(IncludePath)</IncludePath>
     <LibraryPath>E:\courses\Graduation Project\systemc-master\systemc-master\msvc10\SystemC\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>E:\courses\Graduation Project\systemc-master\systemc-master\src;$(IncludePath)</IncludePath>
+    <IncludePath>E:\courses\Graduation Project\OpenCV\sources\include;E:\courses\Graduation Project\systemc-master\systemc-master\src;$(IncludePath)</IncludePath>
     <LibraryPath>E:\courses\Graduation Project\systemc-master\systemc-master\msvc10\SystemC\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -93,13 +93,13 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\courses\Graduation Project\OpenCV\build\include;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>systemc.lib;torch.lib;c10.lib;torch_cpu.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>systemc.lib;torch.lib;c10.lib;torch_cpu.lib;opencv_world470d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\courses\Graduation Project\OpenCV\build\x64\vc16\lib;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -111,15 +111,15 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\courses\Graduation Project\OpenCV\build\include;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>systemc.lib;torch.lib;c10.lib;torch_cpu.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>systemc.lib;torch.lib;c10.lib;torch_cpu.lib;opencv_world470d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\courses\Graduation Project\OpenCV\build\x64\vc16\lib;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -129,13 +129,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\courses\Graduation Project\OpenCV\build\include;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>systemc.lib;torch.lib;c10.lib;torch_cpu.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>systemc.lib;torch.lib;c10.lib;torch_cpu.lib;opencv_world470d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\courses\Graduation Project\OpenCV\build\x64\vc16\lib;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -147,15 +147,15 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\courses\Graduation Project\OpenCV\build\include;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>systemc.lib;torch.lib;c10.lib;torch_cpu.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>systemc.lib;torch.lib;c10.lib;torch_cpu.lib;opencv_world470d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>E:\courses\Graduation Project\OpenCV\build\x64\vc16\lib;E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
