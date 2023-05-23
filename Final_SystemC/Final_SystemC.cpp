@@ -21,14 +21,14 @@ SC_MODULE(Initiator) {
 
     SC_CTOR(Initiator) : init_socket("init_socket") {
         SC_THREAD(sendDataThread);
-    } 
-    
+    }
+
     void sendDataThread() {
         sc_time tLOCAL(SC_ZERO_TIME);
         unsigned int addr = static_cast<unsigned int>(rand() % 0x100);
         cout << "address: " << addr << "\n";
 
-        std::vector<float> input_data = {1.0,2.0,3.0,4.0}; // example input data
+        std::vector<float> input_data = { 1.0,2.0,3.0,4.0 }; // example input data
 
         int input_size = input_data.size() * sizeof(float);
         cout << input_data << input_size;
@@ -41,19 +41,27 @@ SC_MODULE(Initiator) {
         // Send the payload through the init_socket
         SC_REPORT_INFO("A", "Doing a WRITE transaction");
         init_socket->b_transport(payload, tLOCAL);
-       
-       
-        const float* data_ptr = reinterpret_cast<float*>(payload.get_data_ptr());
+
+       /* const float* data_ptr = reinterpret_cast<float*>(payload.get_data_ptr());
         cout << "Data pointer: " << data_ptr << "\n";
-        
+
         std::vector<float> soft_output_data;
         soft_output_data.resize(payload.get_data_length() / sizeof(float));
         std::copy(data_ptr, data_ptr + soft_output_data.size(), soft_output_data.begin());
-        
+
         cout << "New Output: ";
         for (int i = 0; i < soft_output_data.size(); ++i)
-            cout << soft_output_data[i] << " ";
+            cout << soft_output_data[i] << " ";*/
 
+        cout << "\n---------------------------------------------------------------------------------\n";
+        // Extract the input data from the payload
+        float* input_data2 = reinterpret_cast<float*>(payload.get_data_ptr());
+        int input_size2 = payload.get_data_length() / sizeof(float);
+        cout << "Inputs received in initiator module: ";
+        for (int i = 0; i < input_size2; ++i) 
+          cout << input_data2[i] << " ";
+ 
+        cout << endl;
         // Handle response or check for errors
         if (payload.is_response_error())
             SC_REPORT_ERROR("A", "Received error reply.");
@@ -68,8 +76,19 @@ SC_MODULE(Target) {
     SC_CTOR(Target) : target_socket("target_socket") {
         target_socket.register_b_transport(this, &Target::b_transport);
     }
+    std::vector<float> flattened_array;
 
     void b_transport(tlm_generic_payload & payload, sc_time & tLOCAL) {
+
+        // Extract the input data from the payload
+        float* input_data = reinterpret_cast<float*>(payload.get_data_ptr());
+        int input_size = payload.get_data_length() / sizeof(float);
+
+        cout << "Input received in Target module: ";
+        for (int i = 0; i < input_size; ++i) {
+            cout << input_data[i] << " ";
+        }
+        cout << endl;
 
         torch::jit::Module module;
         try {
@@ -80,7 +99,7 @@ SC_MODULE(Target) {
         }
         catch (const c10::Error& e) {
             std::cerr << "error loading the model\n" << e.msg();
-            return ;
+            return;
         }
         // Create a vector of inputs.
         std::vector<torch::jit::IValue> inputs;
@@ -94,21 +113,21 @@ SC_MODULE(Target) {
         std::cout << "Predictions: " << soft_output << '\n';
 
         // Access the underlying data as a C++ array 
-        auto soft_output_accessor = soft_output.accessor<float, 2>(); 
-        std::vector<std::vector<float>> soft_output_array; 
+        auto soft_output_accessor = soft_output.accessor<float, 2>();
+        std::vector<std::vector<float>> soft_output_array;
         // Iterate over the tensor elements and populate the array 
-        for (int i = 0; i < soft_output_accessor.size(0); ++i) { 
-            std::vector<float> row; 
+        for (int i = 0; i < soft_output_accessor.size(0); ++i) {
+            std::vector<float> row;
             for (int j = 0; j < soft_output_accessor.size(1); ++j)
-                row.push_back(soft_output_accessor[i][j]); 
-            soft_output_array.push_back(row); 
-        } 
+                row.push_back(soft_output_accessor[i][j]);
+            soft_output_array.push_back(row);
+        }
 
         for (const auto& row : soft_output_array) {
             cout << "2D array: ";
-            for (const auto& value : row)  
+            for (const auto& value : row)
                 cout << value << " ";
-        cout << endl; 
+            cout << endl;
         }
 
         ////////////////////////// Flattening to 1D array
@@ -116,35 +135,29 @@ SC_MODULE(Target) {
         int total_elements = soft_output_array.size() * soft_output_array[0].size();
 
         // Create a contiguous 1D array and copy the elements
-        std::vector<float> flattened_array(total_elements);
         int index = 0;
+        flattened_array.resize(total_elements);
+        for (int j = 0; j < total_elements; j++) {
+            flattened_array[j] = soft_output_array[0][j];
+            cout << flattened_array[j];
+        }
 
-            for (int j = 0; j < total_elements; j++) {
-                flattened_array[j] = soft_output_array[0][j];
-                cout << flattened_array[j];
-            }
-
-            // Set the data pointer and length in the payload
+        // Set the data pointer and length in the payload
         payload.set_data_ptr(reinterpret_cast<unsigned char*>(flattened_array.data()));
         payload.set_data_length(total_elements * sizeof(float));
-        cout <<"flattened array: "<< &flattened_array<<"\n";
-        
+        cout << "flattened array: ";
+            for (int i = 0; i < total_elements; i++) {
+                cout << flattened_array[i];
+            }
 
         // Extract the input data from the payload
-        float* input_data = reinterpret_cast<float*>(payload.get_data_ptr());
-        int input_size = payload.get_data_length() / sizeof(float);
+       // float* input_data = reinterpret_cast<float*>(payload.get_data_ptr());
+       // int input_size = payload.get_data_length() / sizeof(float);
 
         int batch_size = 1;
         int num_channels = 1;
         int height = 32;
         int width = 32;
-
-        // Create a Torch tensor from the input data
-       /* torch::Tensor input_tensor = torch::from_blob(input_data, {5,1,6,6}, torch::kFloat32);
-
-        // Perform the forward pass using the loaded module
-        torch::Tensor output_tensor = module.forward({ input_tensor }).toTensor();
-        cout << output_tensor << '\n';*/
 
         if (payload.is_read())
             SC_REPORT_INFO("B", "Doing a READ transaction");
@@ -179,12 +192,3 @@ int sc_main(int argc, char* argv[]) {
 
     return 0;
 }
-/*#include "systemc.h"
-#include "top.h"
-#include <torch/script.h>
-int sc_main(int argc, char* argv[]) {
-
-    top ss_top("SS_TOP");
-    sc_start();
-    return 0;
-}*/
