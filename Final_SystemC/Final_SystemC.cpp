@@ -86,7 +86,7 @@ SC_MODULE(Target) {
     }
     std::vector<float> flattened_array;
 
-    void b_transport(tlm_generic_payload & payload, sc_time & tLOCAL) {
+    void b_transport(tlm_generic_payload &payload, sc_time &tLOCAL) {
 
         // Extract the input data from the payload
         float* input_data = reinterpret_cast<float*>(payload.get_data_ptr());
@@ -113,7 +113,9 @@ SC_MODULE(Target) {
         std::vector<torch::jit::IValue> inputs;
         inputs.push_back(torch::rand({ 1,1, 512, 512 }));;
         std::cout << "Inputs: " << inputs << "\n";
-        // Execute the model and turn its output into a tensor.
+        ///////////////////////////////////////////////////////////////////
+        // TODO: Parse inputs value of the image into the forward function/
+        // Execute the model and turn its output into a tensor.////////////
         at::Tensor output = module.forward(inputs).toTensor();
         at::Tensor soft_output = torch::softmax(output, 1);
 
