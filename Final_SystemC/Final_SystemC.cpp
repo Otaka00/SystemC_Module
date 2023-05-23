@@ -18,10 +18,7 @@ using namespace tlm;
 
 SC_MODULE(Initiator) {
     tlm_utils::simple_initiator_socket<Initiator> init_socket;
-    /*/tlm_utils::simple_target_socket<Target> targ_socket;
-    SC_CTOR(Target) : targ_socket("targ_socket") {
-        SC_THREAD(sendDataThread);
-    }*/
+
     SC_CTOR(Initiator) : init_socket("init_socket") {
         SC_THREAD(sendDataThread);
     } 
@@ -32,10 +29,6 @@ SC_MODULE(Initiator) {
         cout << "address: " << addr << "\n";
 
         std::vector<float> input_data = {1.0,2.0,3.0,4.0}; // example input data
-      /* float input_data[10] = {}; // example input data
-        // Prepare data to be sent
-        for (int i = 0; i < 10; i++)
-            input_data[i] = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);*/
 
         int input_size = input_data.size() * sizeof(float);
         cout << input_data << input_size;
@@ -49,10 +42,17 @@ SC_MODULE(Initiator) {
         SC_REPORT_INFO("A", "Doing a WRITE transaction");
         init_socket->b_transport(payload, tLOCAL);
        
-        float* soft_output_data = reinterpret_cast<float*>(payload.get_data_ptr());
-       cout<< "New Output: ";
-       for(int i = 0; i< 10; i++)
-          cout << soft_output_data[i]<<" ";
+       
+        const float* data_ptr = reinterpret_cast<float*>(payload.get_data_ptr());
+        cout << "Data pointer: " << data_ptr << "\n";
+        
+        std::vector<float> soft_output_data;
+        soft_output_data.resize(payload.get_data_length() / sizeof(float));
+        std::copy(data_ptr, data_ptr + soft_output_data.size(), soft_output_data.begin());
+        
+        cout << "New Output: ";
+        for (int i = 0; i < soft_output_data.size(); ++i)
+            cout << soft_output_data[i] << " ";
 
         // Handle response or check for errors
         if (payload.is_response_error())
@@ -67,31 +67,6 @@ SC_MODULE(Target) {
 
     SC_CTOR(Target) : target_socket("target_socket") {
         target_socket.register_b_transport(this, &Target::b_transport);
-    }
-    int load_model() {
-
-        torch::jit::Module module;
-        try {
-            // Deserialize the ScriptModule from a file using torch::jit::load().
-            module = torch::jit::load("E:\\courses\\Graduation Project\\trained_model.pt");
-            // module = torch:: ::load("trained_model.pt");
-
-        }
-        catch (const c10::Error& e) {
-            std::cerr << "error loading the model\n" << e.msg();
-            return -1;
-        }
-        // Create a vector of inputs.
-        std::vector<torch::jit::IValue> inputs;
-        inputs.push_back(torch::rand({ 1,1, 28, 28 }));;
-        std::cout << "Inputs: " << inputs << "\n";
-        // Execute the model and turn its output into a tensor.
-        at::Tensor output = module.forward(inputs).toTensor();
-        at::Tensor soft_output = torch::softmax(output, 1);
-
-        std::cout << output << '\n';
-        std::cout << "Predictions: " << soft_output << '\n';
-        return 0;
     }
 
     void b_transport(tlm_generic_payload & payload, sc_time & tLOCAL) {
@@ -152,19 +127,8 @@ SC_MODULE(Target) {
             // Set the data pointer and length in the payload
         payload.set_data_ptr(reinterpret_cast<unsigned char*>(flattened_array.data()));
         payload.set_data_length(total_elements * sizeof(float));
-
-        /*load_model();
-        const char* executablePath = R"(E:\courses\"Graduation Project"\PyTorchScript\out\build\x64-debug\PyTorchScript\PyTorchScript.exe)";
-        // Execute the external executable
-        int result = std::system(executablePath);
-
-        // Check the result
-        if (result == 0)
-            // Execution succeeded
-            cout << "\nExecution succeeded";
-        else
-            // Execution failed
-            cout << "\nExecution failed";*/
+        cout <<"flattened array: "<< &flattened_array<<"\n";
+        
 
         // Extract the input data from the payload
         float* input_data = reinterpret_cast<float*>(payload.get_data_ptr());
