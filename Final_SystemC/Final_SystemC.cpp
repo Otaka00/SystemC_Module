@@ -1,32 +1,44 @@
+#include <iostream>
+#include <string>
+#include <memory>
+#include <vector>
+#include <torch/script.h>
+#include <torch/torch.h>
+#include <torch/nn.h>
+#include <torch/optim.h>
+#include <torch/data/example.h>
+#include <torch/csrc/jit/serialization/import.h>
 #include "systemc.h"
 #include "tlm.h"
 #include "tlm_utils/simple_initiator_socket.h"
 #include "tlm_utils/simple_target_socket.h"
-#include <torch/torch.h>
-#include <torch/csrc/jit/serialization/import.h>
 
 using namespace sc_core;
 using namespace tlm;
 
 SC_MODULE(Initiator) {
     tlm_utils::simple_initiator_socket<Initiator> init_socket;
-
+    /*/tlm_utils::simple_target_socket<Target> targ_socket;
+    SC_CTOR(Target) : targ_socket("targ_socket") {
+        SC_THREAD(sendDataThread);
+    }*/
     SC_CTOR(Initiator) : init_socket("init_socket") {
         SC_THREAD(sendDataThread);
-    }
-
+    } 
+    
     void sendDataThread() {
         sc_time tLOCAL(SC_ZERO_TIME);
         unsigned int addr = static_cast<unsigned int>(rand() % 0x100);
         cout << "address: " << addr << "\n";
 
-        std::vector<float> input_data = { 1.0, 2.0, 3.0, 4.0 }; // example input data
-        int input_size = input_data.size() * sizeof(float);
+        std::vector<float> input_data = {1.0,2.0,3.0,4.0}; // example input data
+      /* float input_data[10] = {}; // example input data
         // Prepare data to be sent
-       /* for (int i = 0; i < 10; i++) {
-            input_data[i] = static_cast<float>((float)(rand()) / (float)(rand()));
-        }*/
-        cout << input_data;
+        for (int i = 0; i < 10; i++)
+            input_data[i] = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);*/
+
+        int input_size = input_data.size() * sizeof(float);
+        cout << input_data << input_size;
         // Create a payload for the transaction
         tlm_generic_payload payload;
         payload.set_data_ptr(reinterpret_cast<unsigned char*>(input_data.data()));
@@ -36,10 +48,17 @@ SC_MODULE(Initiator) {
         // Send the payload through the init_socket
         SC_REPORT_INFO("A", "Doing a WRITE transaction");
         init_socket->b_transport(payload, tLOCAL);
+       
+        float* soft_output_data = reinterpret_cast<float*>(payload.get_data_ptr());
+       cout<< "New Output: ";
+       for(int i = 0; i< 10; i++)
+          cout << soft_output_data[i]<<" ";
 
         // Handle response or check for errors
         if (payload.is_response_error())
             SC_REPORT_ERROR("A", "Received error reply.");
+        else
+            SC_REPORT_INFO("A", "Received correct reply.");
     }
 };
 
@@ -49,28 +68,92 @@ SC_MODULE(Target) {
     SC_CTOR(Target) : target_socket("target_socket") {
         target_socket.register_b_transport(this, &Target::b_transport);
     }
-    void loadAndUseModel() {
-        // Deserialize the ScriptModule from a file using torch::jit::load()
+    int load_model() {
+
         torch::jit::Module module;
-        try
-        {
+        try {
+            // Deserialize the ScriptModule from a file using torch::jit::load().
             module = torch::jit::load("E:\\courses\\Graduation Project\\trained_model.pt");
-        }
+            // module = torch:: ::load("trained_model.pt");
 
+        }
         catch (const c10::Error& e) {
-            std::cerr << "Error loading the model: " << e.msg() << std::endl;
-            return;
+            std::cerr << "error loading the model\n" << e.msg();
+            return -1;
         }
-
-        // Perform operations using the loaded module
+        // Create a vector of inputs.
         std::vector<torch::jit::IValue> inputs;
-        inputs.push_back(torch::rand({ 1, 1, 28, 28 }));
-        torch::Tensor output = module.forward(inputs).toTensor();
+        inputs.push_back(torch::rand({ 1,1, 28, 28 }));;
+        std::cout << "Inputs: " << inputs << "\n";
+        // Execute the model and turn its output into a tensor.
+        at::Tensor output = module.forward(inputs).toTensor();
+        at::Tensor soft_output = torch::softmax(output, 1);
+
         std::cout << output << '\n';
+        std::cout << "Predictions: " << soft_output << '\n';
+        return 0;
     }
 
     void b_transport(tlm_generic_payload & payload, sc_time & tLOCAL) {
 
+        torch::jit::Module module;
+        try {
+            // Deserialize the ScriptModule from a file using torch::jit::load().
+            module = torch::jit::load("E:\\courses\\Graduation Project\\trained_model.pt");
+            // module = torch:: ::load("trained_model.pt");
+
+        }
+        catch (const c10::Error& e) {
+            std::cerr << "error loading the model\n" << e.msg();
+            return ;
+        }
+        // Create a vector of inputs.
+        std::vector<torch::jit::IValue> inputs;
+        inputs.push_back(torch::rand({ 1,1, 28, 28 }));;
+        std::cout << "Inputs: " << inputs << "\n";
+        // Execute the model and turn its output into a tensor.
+        at::Tensor output = module.forward(inputs).toTensor();
+        at::Tensor soft_output = torch::softmax(output, 1);
+
+        std::cout << output << '\n';
+        std::cout << "Predictions: " << soft_output << '\n';
+
+        // Access the underlying data as a C++ array 
+        auto soft_output_accessor = soft_output.accessor<float, 2>(); 
+        std::vector<std::vector<float>> soft_output_array; 
+        // Iterate over the tensor elements and populate the array 
+        for (int i = 0; i < soft_output_accessor.size(0); ++i) { 
+            std::vector<float> row; 
+            for (int j = 0; j < soft_output_accessor.size(1); ++j)
+                row.push_back(soft_output_accessor[i][j]); 
+            soft_output_array.push_back(row); 
+        } 
+
+        for (const auto& row : soft_output_array) {
+            cout << "2D array: ";
+            for (const auto& value : row)  
+                cout << value << " ";
+        cout << endl; 
+        }
+
+        ////////////////////////// Flattening to 1D array
+        // Calculate the total number of elements
+        int total_elements = soft_output_array.size() * soft_output_array[0].size();
+
+        // Create a contiguous 1D array and copy the elements
+        std::vector<float> flattened_array(total_elements);
+        int index = 0;
+
+            for (int j = 0; j < total_elements; j++) {
+                flattened_array[j] = soft_output_array[0][j];
+                cout << flattened_array[j];
+            }
+
+            // Set the data pointer and length in the payload
+        payload.set_data_ptr(reinterpret_cast<unsigned char*>(flattened_array.data()));
+        payload.set_data_length(total_elements * sizeof(float));
+
+        /*load_model();
         const char* executablePath = R"(E:\courses\"Graduation Project"\PyTorchScript\out\build\x64-debug\PyTorchScript\PyTorchScript.exe)";
         // Execute the external executable
         int result = std::system(executablePath);
@@ -81,22 +164,7 @@ SC_MODULE(Target) {
             cout << "\nExecution succeeded";
         else
             // Execution failed
-            cout << "\nExecution failed";
-
-        /*sc_spawn_options options;
-        options.spawn_method();
-        sc_spawn(sc_bind(&Target::loadAndUseModel, this), "torch_thread", &options);
-
-        // Deserialize the ScriptModule from a file using torch::jit::load()
-       torch::jit::Module module;
-        try {
-
-            module = torch::jit::load("E:\\courses\\Graduation Project\\trained_model.pt");
-        }
-        catch (const c10::Error& e) {
-            std::cerr << "Error loading the model: " << e.msg() << std::endl;
-            return;
-        }*/
+            cout << "\nExecution failed";*/
 
         // Extract the input data from the payload
         float* input_data = reinterpret_cast<float*>(payload.get_data_ptr());
@@ -128,7 +196,13 @@ SC_MODULE(Target) {
     }
 };
 
+void setMKLThreads() {
+    int numThreads = 4; // Set the desired number of threads
+    torch::set_num_threads(numThreads);
+}
+
 int sc_main(int argc, char* argv[]) {
+    setMKLThreads();
     // Create instances of the initiator and target modules
     Initiator initiator("initiator");
     Target target("target");
