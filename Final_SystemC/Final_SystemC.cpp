@@ -42,17 +42,6 @@ SC_MODULE(Initiator) {
         SC_REPORT_INFO("A", "Doing a WRITE transaction");
         init_socket->b_transport(payload, tLOCAL);
 
-       /* const float* data_ptr = reinterpret_cast<float*>(payload.get_data_ptr());
-        cout << "Data pointer: " << data_ptr << "\n";
-
-        std::vector<float> soft_output_data;
-        soft_output_data.resize(payload.get_data_length() / sizeof(float));
-        std::copy(data_ptr, data_ptr + soft_output_data.size(), soft_output_data.begin());
-
-        cout << "New Output: ";
-        for (int i = 0; i < soft_output_data.size(); ++i)
-            cout << soft_output_data[i] << " ";*/
-
         cout << "\n---------------------------------------------------------------------------------\n";
         // Extract the input data from the payload
         float* input_data2 = reinterpret_cast<float*>(payload.get_data_ptr());
@@ -127,7 +116,6 @@ SC_MODULE(Target) {
             cout << "2D array: ";
             for (const auto& value : row)
                 cout << value << " ";
-            cout << endl;
         }
 
         ////////////////////////// Flattening to 1D array
@@ -137,6 +125,7 @@ SC_MODULE(Target) {
         // Create a contiguous 1D array and copy the elements
         int index = 0;
         flattened_array.resize(total_elements);
+        cout << "\n1D array: ";
         for (int j = 0; j < total_elements; j++) {
             flattened_array[j] = soft_output_array[0][j];
             cout << flattened_array[j];
@@ -145,14 +134,10 @@ SC_MODULE(Target) {
         // Set the data pointer and length in the payload
         payload.set_data_ptr(reinterpret_cast<unsigned char*>(flattened_array.data()));
         payload.set_data_length(total_elements * sizeof(float));
-        cout << "flattened array: ";
-            for (int i = 0; i < total_elements; i++) {
+        cout << "\nflattened array: ";
+            for (int i = 0; i < total_elements; i++) 
                 cout << flattened_array[i];
-            }
-
-        // Extract the input data from the payload
-       // float* input_data = reinterpret_cast<float*>(payload.get_data_ptr());
-       // int input_size = payload.get_data_length() / sizeof(float);
+            
 
         int batch_size = 1;
         int num_channels = 1;
