@@ -204,7 +204,7 @@ SC_MODULE(Target) {
         //target_socket->b_transport(payload, tLOCAL);
     }
 };
-
+/*
 void setMKLThreads() {
     int numThreads = 4; // Set the desired number of threads
     torch::set_num_threads(numThreads);
@@ -224,3 +224,4 @@ int sc_main(int argc, char* argv[]) {
 
     return 0;
 }
+*/

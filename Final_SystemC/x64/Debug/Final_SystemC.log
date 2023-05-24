@@ -1,4 +1,4 @@
-﻿  Final_SystemC.cpp
+﻿  TestBench.cpp
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\c10\macros\Macros.h(138,20): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\c10\util\Exception.h(29,45): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'c10::Error'
 E:\Ahmad\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\vcruntime_exception.h(48): message : see declaration of 'std::exception'
@@ -1418,30 +1418,14 @@ E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\incl
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\ir\attributes.h(146): message : see declaration of 'std::vector<std::shared_ptr<torch::jit::Graph>,std::allocator<std::shared_ptr<torch::jit::Graph>>>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\frontend\source_range.h(172,33): warning C4251: 'torch::jit::StringCordView::pieces_': class 'std::vector<c10::string_view,std::allocator<c10::string_view>>' needs to have dll-interface to be used by clients of struct 'torch::jit::StringCordView'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\ATen\core\dynamic_type.h(140): message : see declaration of 'std::vector<c10::string_view,std::allocator<c10::string_view>>'
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\frontend\source_range.h(173,23): warning C4251: 'torch::jit::StringCordView::accumulated_sizes_': class 'std::vector<T,std::allocator<T>>' needs to have dll-interface to be used by clients of struct 'torch::jit::StringCordView'
-          with
-          [
-              T=size_t
-          ]
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\c10\util\ArrayRef.h(247): message : see declaration of 'std::vector<T,std::allocator<T>>'
-          with
-          [
-              T=size_t
-          ]
+E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\frontend\source_range.h(173,23): warning C4251: 'torch::jit::StringCordView::accumulated_sizes_': class 'std::vector<unsigned __int64,std::allocator<unsigned __int64>>' needs to have dll-interface to be used by clients of struct 'torch::jit::StringCordView'
+E:\courses\Graduation Project\systemc-master\systemc-master\src\tlm_core\tlm_2\tlm_generic_payload\tlm_array.h(114): message : see declaration of 'std::vector<unsigned __int64,std::allocator<unsigned __int64>>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\frontend\source_range.h(174,45): warning C4251: 'torch::jit::StringCordView::owned_strings_': class 'std::vector<std::shared_ptr<std::string>,std::allocator<std::shared_ptr<std::string>>>' needs to have dll-interface to be used by clients of struct 'torch::jit::StringCordView'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\frontend\source_range.h(26): message : see declaration of 'std::vector<std::shared_ptr<std::string>,std::allocator<std::shared_ptr<std::string>>>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\frontend\source_range.h(290,30): warning C4251: 'torch::jit::Source::filename_': class 'c10::optional<std::string>' needs to have dll-interface to be used by clients of struct 'torch::jit::Source'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\ATen\core\jit_type_base.h(76): message : see declaration of 'c10::optional<std::string>'
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\frontend\source_range.h(295,23): warning C4251: 'torch::jit::Source::line_starting_offsets_': class 'std::vector<T,std::allocator<T>>' needs to have dll-interface to be used by clients of struct 'torch::jit::Source'
-          with
-          [
-              T=size_t
-          ]
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\c10\util\ArrayRef.h(247): message : see declaration of 'std::vector<T,std::allocator<T>>'
-          with
-          [
-              T=size_t
-          ]
+E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\frontend\source_range.h(295,23): warning C4251: 'torch::jit::Source::line_starting_offsets_': class 'std::vector<unsigned __int64,std::allocator<unsigned __int64>>' needs to have dll-interface to be used by clients of struct 'torch::jit::Source'
+E:\courses\Graduation Project\systemc-master\systemc-master\src\tlm_core\tlm_2\tlm_generic_payload\tlm_array.h(114): message : see declaration of 'std::vector<unsigned __int64,std::allocator<unsigned __int64>>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\frontend\source_range.h(297,41): warning C4251: 'torch::jit::Source::gen_ranges_': class 'std::shared_ptr<torch::jit::SourceRangeUnpickler>' needs to have dll-interface to be used by clients of struct 'torch::jit::Source'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\frontend\source_range.h(191): message : see declaration of 'std::shared_ptr<torch::jit::SourceRangeUnpickler>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\frontend\source_range.h(388,27): warning C4251: 'torch::jit::SourceRange::source_view_': class 'std::shared_ptr<torch::jit::Source>' needs to have dll-interface to be used by clients of struct 'torch::jit::SourceRange'
@@ -1603,26 +1587,10 @@ E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\incl
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\utils\schema_info.h(91): message : see declaration of 'std::unordered_set<c10::SchemaArgument,std::hash<c10::SchemaArgument>,std::equal_to<c10::SchemaArgument>,std::allocator<c10::SchemaArgument>>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\utils\schema_info.h(102,47): warning C4251: 'torch::utils::SchemaInfo::value_map_': class 'std::unordered_map<std::string,c10::IValue,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,c10::IValue>>>' needs to have dll-interface to be used by clients of struct 'torch::utils::SchemaInfo'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\ATen\core\function_schema.h(485): message : see declaration of 'std::unordered_map<std::string,c10::IValue,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,c10::IValue>>>'
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\utils\schema_info.h(105,43): warning C4251: 'torch::utils::SchemaInfo::input_alias_map_': class 'std::vector<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<T>>,std::allocator<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<T>>>>' needs to have dll-interface to be used by clients of struct 'torch::utils::SchemaInfo'
-          with
-          [
-              T=size_t
-          ]
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\utils\schema_info.h(105): message : see declaration of 'std::vector<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<T>>,std::allocator<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<T>>>>'
-          with
-          [
-              T=size_t
-          ]
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\utils\schema_info.h(108,43): warning C4251: 'torch::utils::SchemaInfo::output_alias_map_': class 'std::vector<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<T>>,std::allocator<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<T>>>>' needs to have dll-interface to be used by clients of struct 'torch::utils::SchemaInfo'
-          with
-          [
-              T=size_t
-          ]
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\utils\schema_info.h(105): message : see declaration of 'std::vector<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<T>>,std::allocator<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<T>>>>'
-          with
-          [
-              T=size_t
-          ]
+E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\utils\schema_info.h(105,43): warning C4251: 'torch::utils::SchemaInfo::input_alias_map_': class 'std::vector<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<unsigned __int64>>,std::allocator<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<unsigned __int64>>>>' needs to have dll-interface to be used by clients of struct 'torch::utils::SchemaInfo'
+E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\utils\schema_info.h(105): message : see declaration of 'std::vector<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<unsigned __int64>>,std::allocator<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<unsigned __int64>>>>'
+E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\utils\schema_info.h(108,43): warning C4251: 'torch::utils::SchemaInfo::output_alias_map_': class 'std::vector<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<unsigned __int64>>,std::allocator<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<unsigned __int64>>>>' needs to have dll-interface to be used by clients of struct 'torch::utils::SchemaInfo'
+E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\utils\schema_info.h(105): message : see declaration of 'std::vector<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<unsigned __int64>>,std::allocator<std::unordered_set<size_t,std::hash<uint64_t>,std::equal_to<uint64_t>,std::allocator<unsigned __int64>>>>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\ATen\core\enum_type.h(97,11): warning C4251: 'c10::EnumType::value_type_': class 'c10::Type::SingletonOrSharedTypePtr<c10::Type>' needs to have dll-interface to be used by clients of struct 'c10::EnumType'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\ATen\core\jit_type_base.h(384): message : see declaration of 'c10::Type::SingletonOrSharedTypePtr<c10::Type>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\ATen\core\enum_type.h(98,30): warning C4251: 'c10::EnumType::enum_names_values_': class 'std::vector<c10::EnumNameValue,std::allocator<std::pair<_Kty,_Ty>>>' needs to have dll-interface to be used by clients of struct 'c10::EnumType'
@@ -1977,16 +1945,8 @@ E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\incl
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\autograd\graph_task.h(187): message : see declaration of 'std::vector<std::function<void (void)>,std::allocator<std::function<void (void)>>>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\serialization\unpickler.h(150,23): warning C4251: 'torch::jit::Unpickler::memo_table_': class 'std::vector<c10::IValue,std::allocator<c10::IValue>>' needs to have dll-interface to be used by clients of class 'torch::jit::Unpickler'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\c10\core\impl\PyInterpreter.h(25): message : see declaration of 'std::vector<c10::IValue,std::allocator<c10::IValue>>'
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\serialization\unpickler.h(151,23): warning C4251: 'torch::jit::Unpickler::marks_': class 'std::vector<T,std::allocator<T>>' needs to have dll-interface to be used by clients of class 'torch::jit::Unpickler'
-          with
-          [
-              T=size_t
-          ]
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\c10\util\ArrayRef.h(247): message : see declaration of 'std::vector<T,std::allocator<T>>'
-          with
-          [
-              T=size_t
-          ]
+E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\serialization\unpickler.h(151,23): warning C4251: 'torch::jit::Unpickler::marks_': class 'std::vector<unsigned __int64,std::allocator<unsigned __int64>>' needs to have dll-interface to be used by clients of class 'torch::jit::Unpickler'
+E:\courses\Graduation Project\systemc-master\systemc-master\src\tlm_core\tlm_2\tlm_generic_payload\tlm_array.h(114): message : see declaration of 'std::vector<unsigned __int64,std::allocator<unsigned __int64>>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\serialization\unpickler.h(152,29): warning C4251: 'torch::jit::Unpickler::tensor_table_': class 'c10::ArrayRef<at::Tensor>' needs to have dll-interface to be used by clients of class 'torch::jit::Unpickler'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\ATen\core\ATen_fwd.h(32): message : see declaration of 'c10::ArrayRef<at::Tensor>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\serialization\unpickler.h(158,49): warning C4251: 'torch::jit::Unpickler::type_cache_': class 'std::unordered_map<std::string,c10::TypePtr,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,c10::TypePtr>>>' needs to have dll-interface to be used by clients of class 'torch::jit::Unpickler'
@@ -2009,26 +1969,10 @@ E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\incl
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\c10\core\TensorOptions.h(25): message : see declaration of 'c10::optional<c10::Device>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\serialization\unpickler.h(176,50): warning C4251: 'torch::jit::Unpickler::storage_context_': class 'std::shared_ptr<torch::jit::DeserializationStorageContext>' needs to have dll-interface to be used by clients of class 'torch::jit::Unpickler'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\jit\serialization\unpickler.h(60): message : see declaration of 'std::shared_ptr<torch::jit::DeserializationStorageContext>'
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include\torch\data\samplers\distributed.h(101,23): warning C4251: 'torch::data::samplers::DistributedRandomSampler::all_indices_': class 'std::vector<T,std::allocator<T>>' needs to have dll-interface to be used by clients of class 'torch::data::samplers::DistributedRandomSampler'
-          with
-          [
-              T=size_t
-          ]
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\c10\util\ArrayRef.h(247): message : see declaration of 'std::vector<T,std::allocator<T>>'
-          with
-          [
-              T=size_t
-          ]
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include\torch\data\samplers\distributed.h(134,23): warning C4251: 'torch::data::samplers::DistributedSequentialSampler::all_indices_': class 'std::vector<T,std::allocator<T>>' needs to have dll-interface to be used by clients of class 'torch::data::samplers::DistributedSequentialSampler'
-          with
-          [
-              T=size_t
-          ]
-E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\c10\util\ArrayRef.h(247): message : see declaration of 'std::vector<T,std::allocator<T>>'
-          with
-          [
-              T=size_t
-          ]
+E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include\torch\data\samplers\distributed.h(101,23): warning C4251: 'torch::data::samplers::DistributedRandomSampler::all_indices_': class 'std::vector<unsigned __int64,std::allocator<unsigned __int64>>' needs to have dll-interface to be used by clients of class 'torch::data::samplers::DistributedRandomSampler'
+E:\courses\Graduation Project\systemc-master\systemc-master\src\tlm_core\tlm_2\tlm_generic_payload\tlm_array.h(114): message : see declaration of 'std::vector<unsigned __int64,std::allocator<unsigned __int64>>'
+E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include\torch\data\samplers\distributed.h(134,23): warning C4251: 'torch::data::samplers::DistributedSequentialSampler::all_indices_': class 'std::vector<unsigned __int64,std::allocator<unsigned __int64>>' needs to have dll-interface to be used by clients of class 'torch::data::samplers::DistributedSequentialSampler'
+E:\courses\Graduation Project\systemc-master\systemc-master\src\tlm_core\tlm_2\tlm_generic_payload\tlm_array.h(114): message : see declaration of 'std::vector<unsigned __int64,std::allocator<unsigned __int64>>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include\torch\serialize\input-archive.h(114,15): warning C4251: 'torch::serialize::InputArchive::hierarchy_prefix_': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'torch::serialize::InputArchive'
 E:\Ahmad\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\include\xstring(5186): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include\torch\serialize\output-archive.h(78,41): warning C4251: 'torch::serialize::OutputArchive::cu_': class 'std::shared_ptr<torch::jit::CompilationUnit>' needs to have dll-interface to be used by clients of class 'torch::serialize::OutputArchive'
@@ -2732,7 +2676,7 @@ E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\incl
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\torch\csrc\api\include\torch\optim\lbfgs.h(87,26): warning C4251: 'torch::optim::LBFGS::_numel_cache': class 'c10::optional<int64_t>' needs to have dll-interface to be used by clients of class 'torch::optim::LBFGS'
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\c10\core\TensorImpl.h(1702): message : see declaration of 'c10::optional<int64_t>'
 E:\courses\Graduation Project\Final_SystemC\Final_SystemC\Final_SystemC.cpp(70,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-E:\courses\Graduation Project\Final_SystemC\Final_SystemC\Final_SystemC.cpp(180,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\courses\Graduation Project\Final_SystemC\Final_SystemC\Final_SystemC.cpp(176,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 E:\courses\Graduation Project\libtorch-win-shared-with-deps-debug-2.0.0+cpu\include\c10\util\flat_hash_map.h(171,1): warning C4624: 'ska::detailv3::sherwood_v3_entry<std::pair<K,V>>': destructor was implicitly defined as deleted
           with
           [
