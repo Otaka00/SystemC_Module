@@ -13,6 +13,8 @@
 #include "tlm_utils/simple_initiator_socket.h"
 #include "tlm_utils/simple_target_socket.h"
 #include <opencv2/opencv.hpp>
+#include <random>
+
 
 using namespace sc_core;
 using namespace tlm;
@@ -28,16 +30,14 @@ SC_MODULE(Initiator) {
         sc_time tLOCAL(SC_ZERO_TIME);
         unsigned int addr = static_cast<unsigned int>(rand() % 0x100);
         cout << "address: " << addr << "\n";
-
-
-        cv::Mat image = cv::imread("E:\\courses\\lena.png", cv::IMREAD_COLOR);
+        //Upload image using opencv
+/*        cv::Mat image = cv::imread("E:\\courses\\lena.png", cv::IMREAD_COLOR);
         std::vector<int> input_data(image.rows * image.cols); // example input data
 
         if (image.empty()){
             cerr << "Failed to open image" << endl;
                 return;
         }
-
         int count = 0;
         for (int i = 0; i < image.rows; i++)
         {
@@ -47,8 +47,26 @@ SC_MODULE(Initiator) {
                 //input_data[count] = image.at<float>(i, j);
                 count++;
             }
+        }*/
+
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<int> dis(0, 1);
+        // Create an image of size 28x28
+        cv::Mat image(28, 28, CV_8UC1);
+        // Generate random pixel values and assign them to the image
+        for (int i = 0; i < 28; i++){
+            for (int j = 0; j < 28; j++){
+                int pixel_value = dis(gen); // Generate a random float value between 0.0 and 255.0
+                image.at<uchar>(i, j) = pixel_value;
+            }
         }
 
+        // Scale the pixel values to the range [0, 255]
+        cv::normalize(image, image, 0, 255, cv::NORM_MINMAX, CV_8UC1);
+        cv::imwrite("random.png", image);
+
+        std::vector<int> input_data(image.rows * image.cols); // example input data
         int input_size = input_data.size() * sizeof(float);
         cout << "Input Data: "<< input_data << "\nInput Size: "<< input_size;
         // Create a payload for the transaction
@@ -92,6 +110,7 @@ SC_MODULE(Target) {
         float* input_data = reinterpret_cast<float*>(payload.get_data_ptr());
         int input_size = payload.get_data_length() / sizeof(float);
      
+        //Check the output is received correctly in the target
       /*cout << "Input received in Target module: ";
         for (int i = 0; i < input_size; ++i) {
             cout << input_data[i] << " ";
@@ -109,14 +128,27 @@ SC_MODULE(Target) {
             std::cerr << "error loading the model\n" << e.msg();
             return;
         }
+
+        std::vector<torch::jit::IValue> ivalueVector;
+       
+        int batch_size = 1; int num_channels = 1; int height = 28; int width = 28; 
+        // Reshape the input tensor 
+        at::Tensor input_tensor = torch::from_blob(input_data, {batch_size, num_channels, height, width});
+
+        ivalueVector.push_back(input_tensor);
+        std::cout << "Inputs: " << ivalueVector << "\n";
+
+        // Pass ivalueVector to the forward function
+        at::Tensor output = module.forward(ivalueVector).toTensor();
+
+        ////////////////////////////////////////////////////////////////////
+        // This part should not be commented if wewant to generate random inputs and forward it to the model
         // Create a vector of inputs.
-        std::vector<torch::jit::IValue> inputs;
-        inputs.push_back(torch::rand({ 1,1, 512, 512 }));;
-        std::cout << "Inputs: " << inputs << "\n";
-        ///////////////////////////////////////////////////////////////////
-        // TODO: Parse inputs value of the image into the forward function/
+        //std::vector<torch::jit::IValue> inputs;
+        //inputs.push_back(torch::rand({ 1,1, 28, 28 }));;
+        //std::cout << "Inputs: " << inputs << "\n";
         // Execute the model and turn its output into a tensor.////////////
-        at::Tensor output = module.forward(inputs).toTensor();
+      //  at::Tensor output = module.forward(inputs).toTensor();
         at::Tensor soft_output = torch::softmax(output, 1);
 
         std::cout << output << '\n';
@@ -159,12 +191,6 @@ SC_MODULE(Target) {
             for (int i = 0; i < total_elements; i++) 
                 cout << flattened_array[i];
             
-
-        int batch_size = 1;
-        int num_channels = 1;
-        int height = 32;
-        int width = 32;
-
         if (payload.is_read())
             SC_REPORT_INFO("B", "Doing a READ transaction");
 
